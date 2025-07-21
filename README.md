@@ -67,3 +67,25 @@ AirportDataCollector
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## 💾 수집 데이터 다운로드 도구
+
+- **📄 파일명**: `blobDownload.py`  
+- **🛠 용도**: Azure Blob Storage에 저장된 수집 데이터를 한 번에 로컬로 다운로드하는 스크립트입니다.
+
+### ▶️ 사용법
+
+1. `.env` 파일에 Azure Blob Storage 연결 문자열(`AzureWebJobsStorage`)이 설정되어 있어야 합니다.
+2. 의존 패키지를 설치합니다:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. 스크립트를 실행합니다:
+    ``` bash
+   python blobDownload.py
+   ```
+
+4. 다운로드된 파일은 `./downloaded_blobs/` 폴더에 저장됩니다.

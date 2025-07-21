@@ -17,6 +17,8 @@ def collect_flights(api_url, direction):
     total_fetched = 0
 
     temp_dir = os.getenv("TEMP", "/tmp")
+    os.makedirs(temp_dir, exist_ok=True)
+
     filename = os.path.join(temp_dir,f"flight_data_{now.strftime('%Y%m%d_%H%M')}.csv")
     is_new = not os.path.exists(filename)
 
@@ -25,18 +27,18 @@ def collect_flights(api_url, direction):
             writer = csv.writer(f)
             writer.writerow([
                 "timestamp", "flightId", "fid", "airline", "airport", "airportCode",
-                "direction", "scheduled", "estimated", "status", "passengerOrCargo",
+                "direction", "scheduled", "estimated", "status",
                 "typeOfFlight", "terminalId", "gateNumber", "fstandPosition",
-                "chkinRange", "codeshare", "aircraftSubtype", "aircraftRegNo"
+                "chkinRange", "codeshare"
             ])
 
     while True:
         url = (
             f"{api_url}?serviceKey={SERVICE_KEY}"
             f"&pageNo={page}&numOfRows=1000&type=xml"
-            f"&searchdtCode=E&searchDate={search_date}"
-            f"&searchFrom=0000&searchTo=2400"
-            f"&passengerOrCargo=P&tmp1=-&tmp2=-"
+            f"&searchday={target_date}"
+            f"&from_time=0000&to_time=2400"
+            f"&lang=K"
         )
 
         try:
@@ -59,18 +61,15 @@ def collect_flights(api_url, direction):
                         get_text(item.find("airport")),
                         get_text(item.find("airportCode")),
                         direction,
-                        get_text(item.find("scheduleDatetime")),
-                        get_text(item.find("estimatedDatetime")),
+                        get_text(item.find("scheduleDateTime")),
+                        get_text(item.find("estimatedDateTime")),
                         get_text(item.find("remark")),
-                        get_text(item.find("passengerOrCargo")),
                         get_text(item.find("typeOfFlight")),
-                        get_text(item.find("terminalId")),
-                        get_text(item.find("gateNumber")),
-                        get_text(item.find("fstandPosition")),
-                        get_text(item.find("chkinRange")),
-                        get_text(item.find("codeshare")),
-                        get_text(item.find("aircraftSubtype")),
-                        get_text(item.find("aircraftRegNo"))
+                        get_text(item.find("terminalid")),
+                        get_text(item.find("gatenumber")),
+                        get_text(item.find("fstandposition")),
+                        get_text(item.find("chkinrange")),
+                        get_text(item.find("codeshare"))
                     ])
                     total_fetched += 1
 

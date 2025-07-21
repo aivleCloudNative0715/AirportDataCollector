@@ -29,7 +29,7 @@ def collect_flights(api_url, direction):
                 "timestamp", "flightId", "fid", "airline", "airport", "airportCode",
                 "direction", "scheduled", "estimated", "status",
                 "typeOfFlight", "terminalId", "gateNumber", "fstandPosition",
-                "chkinRange", "codeshare"
+                "chkinRange", "codeshare", "carousel"
             ])
 
     while True:
@@ -69,8 +69,10 @@ def collect_flights(api_url, direction):
                         get_text(item.find("gatenumber")),
                         get_text(item.find("fstandposition")),
                         get_text(item.find("chkinrange")),
-                        get_text(item.find("codeshare"))
+                        get_text(item.find("codeshare")),
+                        get_text(item.find("carousel"))
                     ])
+
                     total_fetched += 1
 
             page += 1

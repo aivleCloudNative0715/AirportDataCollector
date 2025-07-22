@@ -36,7 +36,7 @@ def collect_flights(api_url, direction):
         url = (
             f"{api_url}?serviceKey={SERVICE_KEY}"
             f"&pageNo={page}&numOfRows=1000&type=xml"
-            f"&searchday={target_date}"
+            f"&searchday={search_date}"
             f"&from_time=0000&to_time=2400"
             f"&lang=K"
         )
